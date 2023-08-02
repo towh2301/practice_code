@@ -1,2 +1,2 @@
 # practice_code
-This Repository is to store my codes
+This is folder to store my solved problems
