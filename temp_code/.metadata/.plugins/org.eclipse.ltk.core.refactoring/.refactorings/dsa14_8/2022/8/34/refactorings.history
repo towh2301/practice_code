@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;dob.java&apos; to &apos;dsa21_8/src/dsa21_8&apos;&#x0D;&#x0A;- Original project: &apos;dsa14_8&apos;&#x0D;&#x0A;- Destination element: &apos;dsa21_8/src/dsa21_8&apos;&#x0D;&#x0A;- Original element: &apos;dsa14_8.dob.java&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="=dsa21_8/src&lt;dsa21_8" element1="/src&lt;dsa14_8{dob.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1660843299916" units="1" version="1.0"/>
+</session>

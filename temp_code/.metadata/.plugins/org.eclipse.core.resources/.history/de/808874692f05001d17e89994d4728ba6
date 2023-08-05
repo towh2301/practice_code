@@ -1,0 +1,86 @@
+import java.util.*;
+import java.io.*;
+
+public class EiuAppear {
+	static InputReader reader = new InputReader(System.in);
+	static StringBuilder sBuilder = new StringBuilder();
+
+	public static void main(String[] args) {
+		Integer numOfStudents = reader.nextInt();
+		List<Integer> studentNumList = new ArrayList<>();
+		// List<Integer> tempStudentNumList = new ArrayList<>();
+		InputUtils(numOfStudents, studentNumList);
+		Collections.sort(studentNumList);
+		Integer temp = Collections.max(studentNumList);
+		int i = studentNumList.size() - 1;
+		while (i >= 0) {
+			int count = 1;
+			
+			for (int j = i; j > 0; j--) {
+				if (studentNumList.get(j) == studentNumList.get(j--)) {
+					count++;
+				} else
+					break;	
+			}
+
+			sBuilder.append(studentNumList.get(i)+ " " + count);
+		}
+		System.out.println(sBuilder);
+	}
+
+	public static List<Integer> InputUtils(Integer numOfStudent, List<Integer> students) {
+		for (int i = 0; i < numOfStudent; i++) {
+			students.add(i, reader.nextInt());
+		}
+		return students;
+	}
+
+	static class InputReader {
+		StringTokenizer tokenizer;
+		BufferedReader reader;
+		String token;
+		String temp;
+
+		public InputReader(InputStream stream) {
+			tokenizer = null;
+			reader = new BufferedReader(new InputStreamReader(stream));
+		}
+
+		public InputReader(FileInputStream stream) {
+			tokenizer = null;
+			reader = new BufferedReader(new InputStreamReader(stream));
+		}
+
+		public String nextLine() throws IOException {
+			return reader.readLine();
+		}
+
+		public String next() {
+			while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+				try {
+					if (temp != null) {
+						tokenizer = new StringTokenizer(temp);
+						temp = null;
+					} else {
+						tokenizer = new StringTokenizer(reader.readLine());
+					}
+				} catch (IOException e) {
+				}
+			}
+			return tokenizer.nextToken();
+		}
+
+		public double nextDouble() {
+			return Double.parseDouble(next());
+		}
+
+		public int nextInt() {
+			return Integer.parseInt(next());
+		}
+
+		public long nextLong() {
+			return Long.parseLong(next());
+		}
+	}
+
+}

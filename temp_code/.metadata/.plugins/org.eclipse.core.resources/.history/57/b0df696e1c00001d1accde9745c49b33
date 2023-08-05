@@ -1,0 +1,96 @@
+package dsa_01;
+
+import java.util.*;
+import java.io.*;
+
+public class temp {
+	static StringBuilder sBuilder = new StringBuilder();
+	static InputReader reader = new InputReader(System.in);
+
+	public static void main(String[] args) {
+		int numberOfGifts = reader.nextInt();
+		int numberOfWrapping = reader.nextInt();
+		int[] arrayOfGifts = new int[numberOfGifts];
+		int[] arrayOfWrapping = new int[numberOfWrapping];
+		
+		arrayOfGifts = UserInput(numberOfGifts);
+		arrayOfWrapping = UserInput(numberOfWrapping);
+		
+		int a = SumOfInput(arrayOfWrapping);
+		int b = SumOfInput(arrayOfGifts);
+		 
+		
+		int case2 = a /(b*3);
+		//int case1 = a /(b*2);
+		
+		//if(case1>case2)
+			//System.out.println(case1);
+		//else
+			System.out.println(case2);
+		
+	}
+	
+	public static int[] UserInput(int inputNumber) {
+		int[] tempArray = new int[inputNumber];
+		for (int i = 0; i < tempArray.length; i++)
+			tempArray[i] = reader.nextInt();
+		return tempArray;
+	}
+	
+	public static int SumOfInput(int[] InputArray) {
+		int sumOfArray = 0;
+		for(int i = 0; i<InputArray.length; i++) {
+			sumOfArray += InputArray[i];
+		}
+		return sumOfArray;
+	}
+	
+	
+	static class InputReader {
+		StringTokenizer tokenizer;
+		BufferedReader reader;
+		String token;
+		String temp;
+
+		public InputReader(InputStream stream) {
+			tokenizer = null;
+			reader = new BufferedReader(new InputStreamReader(stream));
+		}
+
+		public InputReader(FileInputStream stream) {
+			tokenizer = null;
+			reader = new BufferedReader(new InputStreamReader(stream));
+		}
+
+		public String nextLine() throws IOException {
+			return reader.readLine();
+		}
+
+		public String next() {
+			while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+				try {
+					if (temp != null) {
+						tokenizer = new StringTokenizer(temp);
+						temp = null;
+					} else {
+						tokenizer = new StringTokenizer(reader.readLine());
+					}
+				} catch (IOException e) {
+				}
+			}
+			return tokenizer.nextToken();
+		}
+
+		public double nextDouble() {
+			return Double.parseDouble(next());
+		}
+
+		public int nextInt() {
+			return Integer.parseInt(next());
+		}
+
+		public long nextLong() {
+			return Long.parseLong(next());
+		}
+	}
+}

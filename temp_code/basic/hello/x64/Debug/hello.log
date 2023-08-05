@@ -1,0 +1,33 @@
+﻿  Sourcee.cpp
+E:\codeblock\basic\hello\Sourcee.cpp(1,2): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+E:\codeblock\basic\hello\Sourcee.cpp(2,17): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+E:\codeblock\basic\hello\Sourcee.cpp(5,20): error C3861: 'printf': identifier not found
+E:\codeblock\basic\hello\Sourcee.cpp(7,17): error C3861: 'memset': identifier not found
+E:\codeblock\basic\hello\Sourcee.cpp(7,38): error C3861: 'memset': identifier not found
+E:\codeblock\basic\hello\Sourcee.cpp(8,54): warning C4305: '+=': truncation from 'double' to 'float'
+E:\codeblock\basic\hello\Sourcee.cpp(9,16): warning C4305: '+=': truncation from 'double' to 'float'
+E:\codeblock\basic\hello\Sourcee.cpp(10,36): error C2660: 'sin': function does not take 1 arguments
+E:\codeblock\basic\hello\Sourcee.cpp(1,11): message : see declaration of 'sin'
+E:\codeblock\basic\hello\Sourcee.cpp(10,48): error C2660: 'cos': function does not take 1 arguments
+E:\codeblock\basic\hello\Sourcee.cpp(2,3): message : see declaration of 'cos'
+E:\codeblock\basic\hello\Sourcee.cpp(11,30): error C2660: 'sin': function does not take 1 arguments
+E:\codeblock\basic\hello\Sourcee.cpp(1,11): message : see declaration of 'sin'
+E:\codeblock\basic\hello\Sourcee.cpp(11,42): error C2660: 'sin': function does not take 1 arguments
+E:\codeblock\basic\hello\Sourcee.cpp(1,11): message : see declaration of 'sin'
+E:\codeblock\basic\hello\Sourcee.cpp(11,54): error C2660: 'cos': function does not take 1 arguments
+E:\codeblock\basic\hello\Sourcee.cpp(2,3): message : see declaration of 'cos'
+E:\codeblock\basic\hello\Sourcee.cpp(12,58): error C2660: 'cos': function does not take 1 arguments
+E:\codeblock\basic\hello\Sourcee.cpp(2,3): message : see declaration of 'cos'
+E:\codeblock\basic\hello\Sourcee.cpp(12,70): error C2660: 'cos': function does not take 1 arguments
+E:\codeblock\basic\hello\Sourcee.cpp(2,3): message : see declaration of 'cos'
+E:\codeblock\basic\hello\Sourcee.cpp(13,1): error C2065: 's': undeclared identifier
+E:\codeblock\basic\hello\Sourcee.cpp(13,25): error C2146: syntax error: missing ';' before identifier 'in'
+E:\codeblock\basic\hello\Sourcee.cpp(13,25): error C3861: 'in': identifier not found
+E:\codeblock\basic\hello\Sourcee.cpp(13,32): error C2065: 't': undeclared identifier
+E:\codeblock\basic\hello\Sourcee.cpp(14,38): error C2065: 't': undeclared identifier
+E:\codeblock\basic\hello\Sourcee.cpp(15,31): error C2065: 't': undeclared identifier
+E:\codeblock\basic\hello\Sourcee.cpp(15,57): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+E:\codeblock\basic\hello\Sourcee.cpp(22,17): error C3861: 'printf': identifier not found
+E:\codeblock\basic\hello\Sourcee.cpp(23,21): error C3861: 'putchar': identifier not found
+E:\codeblock\basic\hello\Sourcee.cpp(23,59): warning C4305: '+=': truncation from 'double' to 'float'
+E:\codeblock\basic\hello\Sourcee.cpp(24,25): warning C4305: '+=': truncation from 'double' to 'float'

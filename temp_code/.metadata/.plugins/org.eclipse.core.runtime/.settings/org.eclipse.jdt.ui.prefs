@@ -1,0 +1,13 @@
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="java.lang.CharSequence"><rhs name\="java.lang.StringBuilder"/></lhs><lhs name\="java.lang.AbstractStringBuilder"><rhs name\="java.lang.StringBuilder"/></lhs><lhs name\="java.lang.Appendable"><rhs name\="java.lang.StringBuilder"/></lhs><lhs name\="java.util.random.RandomGenerator"><rhs name\="java.util.Random"/></lhs><lhs name\="java.util.Random"><rhs name\="java.util.Random"/></lhs><lhs name\="dsa14_8.EI20213FQ1$InputReader"><rhs name\="dsa14_8.EI20213FQ1$InputReader"/></lhs><lhs name\="java.util.Map"><rhs name\="java.util.HashMap"/></lhs><lhs name\="java.lang.Cloneable"><rhs name\="java.util.HashMap"/></lhs><lhs name\="java.util.AbstractMap"><rhs name\="java.util.HashMap"/></lhs><lhs name\="java.util.HashMap"><rhs name\="java.util.HashMap"/></lhs><lhs name\="dsa14_8.EI20213FQ1$SaveTransElements"><rhs name\="dsa14_8.EI20213FQ1$SaveTransElements"/></lhs><lhs name\="dsa21_8.EI20213FQ3_TheHighestRevenue$InputReader"><rhs name\="dsa21_8.EI20213FQ3_TheHighestRevenue$InputReader"/></lhs><lhs name\="java.util.Collection"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="java.lang.Iterable"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="java.util.List"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="dsa21_8.EI20213FQ3_TheHighestRevenue$TransInfor"><rhs name\="dsa21_8.EI20213FQ3_TheHighestRevenue$TransInfor"/></lhs><lhs name\="dsa14_8.dob$Dob"><rhs name\="dsa14_8.dob$Dob"/></lhs><lhs name\="dsa21_8.EI20213FQ3_TheHighestRevenue$HighestRevenue"><rhs name\="dsa21_8.EI20213FQ3_TheHighestRevenue$HighestRevenue"/></lhs></history>
+content_assist_number_of_computers=12
+content_assist_proposals_background=255,255,255
+content_assist_proposals_foreground=0,0,0
+eclipse.preferences.version=1
+markOccurrences=false
+org.eclipse.jdt.internal.ui.navigator.layout=2
+org.eclipse.jdt.internal.ui.navigator.librariesnode=true
+org.eclipse.jdt.ui.formatterprofiles.version=22
+spelling_locale_initialized=true
+typefilter_migrated_2=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true
