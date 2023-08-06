@@ -1,55 +1,133 @@
 package src_code.w3;
+
 import java.io.*;
 import java.util.*;
 
 public class EIPRF_Treasures {
   static InputReader reader;
   static StringBuilder sb = new StringBuilder();
-  public static void main(String[] args) throws IOException{
+
+  public static void main(String[] args) throws IOException {
     reader = new InputReader(System.in);
     int places = reader.nextInt();
     int signBoards = reader.nextInt();
 
     List<Vertex> graph = makeGraph(places, signBoards);
+    Vertex start = graph.get(0);
 
+    // Make start vertex
+    for (Vertex v : graph) {
+      if (v.id == 0) {
+        start = v;
+        break;
+      }
+    }
 
+    // Make signal list
+    customBfs(start);
 
+    int max = Integer.MAX_VALUE;
+    int vertexId = -1;
+    for (Vertex v : graph) {
+      if (v.signalList.size() > 2 && v.signal) {
+        if(v.signalList.size() < max){
+          max = v.signalList.size();
+          vertexId = v.id;
+        }
+      }
+    }
+
+    for(Vertex v : graph.get(vertexId).signalList){
+      sb.append(v.id).append(" ");
+    }
+
+    System.out.println(sb);
   }
 
-  public static
+  public static void customDfs(Vertex start) {
+    start.isVisited = true;
+    start.signalList.add(start);
 
-  public static List<Vertex> makeGraph(int places, int signBoards){
+    for (Vertex v : start.adjecentList) {
+      if (!v.isVisited) {
+        v.signalList = start.signalList;
+        customDfs(v);
+      }
+    }
+  }
+
+  public static void customBfs(Vertex start){
+    Queue<Vertex> queue = new LinkedList<>();
+    queue.add(start);
+    start.isVisited = true;
+
+    while(!queue.isEmpty()){
+      Vertex v = queue.poll();
+      v.signalList.add(v);
+
+      for(Vertex w : v.adjecentList){
+        if(!w.isVisited){
+          w.signalList.addAll(v.signalList);
+          w.isVisited = true;
+          queue.add(w);
+        }
+      }
+    }
+  }
+
+  public static List<Vertex> makeGraph(int places, int signBoards) {
     List<Vertex> graph = new ArrayList<>();
-    for(int i = 0; i < places; i++){
+    for (int i = 0; i < places; i++) {
       graph.add(new Vertex(i));
     }
-    for(int i = 0; i < signBoards; i++){
+    for (int i = 0; i < signBoards; i++) {
       int from = reader.nextInt();
       int to = reader.nextInt();
       graph.get(from).addNeighbour(graph.get(to));
+
+      // Consider it is a cycle
+      if (to == 0) {
+        graph.get(from).signal = true;
+      }
     }
 
-    for (Vertex v : graph) {
-      v.adjecentList.sort(Comparator.comparingInt(e -> e.id));
-    }
+//    for (Vertex v : graph) {
+//      v.adjecentList.sort(Comparator.comparingInt(e -> e.id));
+//    }
 
     return graph;
   }
 
-  public static class Vertex{
+  public static class Vertex {
     int id;
     boolean isVisited;
-
-
+    boolean signal;
+    int level;
+    Set<Integer> path;
     List<Vertex> adjecentList;
-    Vertex(int id){
+    List<Vertex> signalList;
+
+    Vertex(int id) {
       this.id = id;
       this.isVisited = false;
+      this.signal = false;
       this.adjecentList = new ArrayList<>();
+      this.signalList = new ArrayList<>();
+      this.path = new HashSet<>();
+      this.level = -1;
+      // this.path.add(id);
     }
 
-    public void addNeighbour(Vertex v){
+    public void addPath(int id) {
+      this.path.add(id);
+    }
+
+    public void addNeighbour(Vertex v) {
       this.adjecentList.add(v);
+    }
+
+    public void addSignalList(List<Vertex> signalList) {
+      this.signalList = signalList;
     }
   }
 
