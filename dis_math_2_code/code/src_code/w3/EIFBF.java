@@ -2,7 +2,6 @@ package src_code.w3;
 
 import java.io.*;
 import java.util.*;
-import java.lang.*;
 
 public class EIFBF {
   static InputReader reader;

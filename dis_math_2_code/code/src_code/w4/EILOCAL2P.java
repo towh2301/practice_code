@@ -1,121 +1,137 @@
-package src_code.w3;
+package src_code.w4;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
-public class EIPRF_Treasures {
-  static InputReader reader;
+public class EILOCAL2P {
+  static InputReader sc;
   static StringBuilder sb = new StringBuilder();
 
-  public static void main(String[] args) throws IOException {
-    reader = new InputReader(System.in);
-    int places = reader.nextInt();
-    int signBoards = reader.nextInt();
+  public static void main(String[] args) throws IOException{
+    sc = new InputReader(System.in);
 
-    List<Vertex> graph = makeGraph(places, signBoards);
-    Vertex start = graph.get(0);
+    List<Node> nodeList = makeGraph();
+    Node start = nodeList.get(0);
 
-    // Make start vertex
-    for (Vertex v : graph) {
-      if (v.id == 0) {
-        start = v;
+    // Find the start
+    for (Node n : nodeList) {
+      if (n.id == 0) {
+        start = n;
         break;
       }
     }
 
-    // Make signal list
-    customBfs(start);
-
-    int max = Integer.MAX_VALUE;
-    int vertexId = -1;
-    for (Vertex v : graph) {
-      if (v.signalList.size() > 2 && v.signal) {
-        if(v.signalList.size() < max){
-          max = v.signalList.size();
-          vertexId = v.id;
-        }
+    findSolution(start);
+    int max = -1;
+    int id = 0;
+    for (Node node : nodeList){
+      if (max < node.distance){
+        max = node.distance;
+        id = node.id;
       }
     }
 
-    for(Vertex v : graph.get(vertexId).signalList){
-      sb.append(v.id).append(" ");
+    for(Node i : nodeList){
+      i.distance = 0;
+      i.isVisited = false;
     }
 
-    System.out.println(sb);
+    // Start from new node
+    findSolution1(nodeList.get(id));
+    int max1 = -1;
+    int id2 = -1;
+    Node end = null;
+    for (Node node : nodeList){
+      if (max1 < node.distance){
+        max1 = node.distance;
+        end = node;
+        id2 = node.id;
+      }
+    }
+
+    if (id2 < id) id = id2;
+
+    if(end != null){
+      System.out.println(id + " " + end.distance);
+    }
   }
 
-  public static void customBfs(Vertex start){
-    Queue<Vertex> queue = new LinkedList<>();
-    queue.add(start);
+  public static void findSolution(Node start) {
     start.isVisited = true;
 
-    while(!queue.isEmpty()){
-      Vertex v = queue.poll();
-      v.signalList.add(v);
-
-      for(Vertex w : v.adjecentList){
-        if(!w.isVisited){
-          w.signalList.addAll(v.signalList);
-          w.isVisited = true;
-          queue.add(w);
+    for (Node child : start.nodeList){
+      if(!child.isVisited){
+        child.distance = start.distanceMap.get(child.id);
+        if(child.distance <= start.distance + child.distance){
+          child.distance += start.distance;
         }
+        findSolution(child);
       }
     }
   }
 
-  public static List<Vertex> makeGraph(int places, int signBoards) {
-    List<Vertex> graph = new ArrayList<>();
-    for (int i = 0; i < places; i++) {
-      graph.add(new Vertex(i));
-    }
-    for (int i = 0; i < signBoards; i++) {
-      int from = reader.nextInt();
-      int to = reader.nextInt();
-      graph.get(from).addNeighbour(graph.get(to));
+  public static void findSolution1(Node start) {
+    start.isVisited = true;
 
-      // Consider it is a cycle
-      if (to == 0) {
-        graph.get(from).signal = true;
+    for (Node child : start.nodeList){
+      if(!child.isVisited){
+        child.distance = start.distanceMap.get(child.id);
+        if(child.distance <= start.distance + child.distance){
+          child.distance += start.distance;
+        }
+        findSolution(child);
       }
     }
-
-    return graph;
   }
 
-  public static class Vertex {
+  public static List<Node> makeGraph() {
+    int switches = sc.nextInt();
+    List<Node> nodeList = new ArrayList<>();
+
+    // Initialize node
+    for (int i = 0; i < switches; i++) {
+      nodeList.add(new Node(i));
+    }
+
+    // Input value
+    for (int i = 0; i < switches - 1; i++) {
+      int u = sc.nextInt();
+      int v = sc.nextInt();
+      int distance = sc.nextInt();
+
+      nodeList.get(u).addNeighbor(nodeList.get(v));
+      nodeList.get(v).addNeighbor(nodeList.get(u));
+
+      nodeList.get(u).distanceMap.put(v, distance);
+      nodeList.get(v).distanceMap.put(u, distance);
+    }
+
+    return nodeList;
+  }
+
+  public static class Node {
     int id;
     boolean isVisited;
-    boolean signal;
-    int level;
-    Set<Integer> path;
-    List<Vertex> adjecentList;
-    List<Vertex> signalList;
+    int distance;
+    List<Node> nodeList;
 
-    Vertex(int id) {
+    HashMap<Integer, Integer> distanceMap;
+
+    public Node(int id) {
       this.id = id;
+      this.distance = 0;
+      this.nodeList = new ArrayList<>();
+      this.distanceMap = new HashMap<>();
       this.isVisited = false;
-      this.signal = false;
-      this.adjecentList = new ArrayList<>();
-      this.signalList = new ArrayList<>();
-      this.path = new HashSet<>();
-      this.level = -1;
-      // this.path.add(id);
     }
 
-    public void addPath(int id) {
-      this.path.add(id);
+    public void addNeighbor(Node node) {
+      this.nodeList.add(node);
     }
 
-    public void addNeighbour(Vertex v) {
-      this.adjecentList.add(v);
-    }
-
-    public void addSignalList(List<Vertex> signalList) {
-      this.signalList = signalList;
-    }
   }
-
-
   public static class InputReader {
     private byte[] inbuf = new byte[2 << 23];
     public int lenbuf = 0, ptrbuf = 0;
@@ -238,5 +254,4 @@ public class EIPRF_Treasures {
       }
     }
   }
-
 }

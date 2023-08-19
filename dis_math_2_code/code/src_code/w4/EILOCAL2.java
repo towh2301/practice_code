@@ -1,84 +1,100 @@
-package src_code.w1;
+package src_code.w4;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-public class EIUDFS1 {
-  static InputReader reader;
+public class EILOCAL2 {
+  static InputReader sc;
   static StringBuilder sb = new StringBuilder();
 
-  public static void main(String[] args) throws IOException {
-    reader = new InputReader(System.in);
-    Vertex[] vertexes = makeGraph();
+  public static void main(String[] args) throws IOException{
+    sc = new InputReader(System.in);
 
-    breadthFirstSearch(vertexes[0]);
+    List<Node> nodeList = makeGraph();
+    Node start = nodeList.get(0);
 
-    System.out.println(sb);
-  }
-
-  public static Vertex[] makeGraph() {
-    int numberOfVertexes = reader.nextInt();
-    int numberOfEdges = reader.nextInt();
-    Vertex[] listOfVertex = new Vertex[numberOfVertexes];
-    for (int i = 0; i < listOfVertex.length; i++) {
-      listOfVertex[i] = new Vertex(i);
-    }
-    for (int i = 0; i < numberOfEdges; i++) {
-      int u = reader.nextInt();
-      int v = reader.nextInt();
-      listOfVertex[u].addAdjecentVertex(listOfVertex[v]);
-      listOfVertex[v].addAdjecentVertex(listOfVertex[u]);
-    }
-    for (Vertex i : listOfVertex) {
-      i.adjecentVertex.sort(Comparator.comparingInt(v -> v.id));
-    }
-    return listOfVertex;
-  }
-
-  public static void depthFirstSearch(Vertex v) {
-    v.discovered = true;
-    sb.append(v.id).append(" ");
-    for (Vertex i : v.adjecentVertex) {
-      if (!i.discovered) {
-        depthFirstSearch(i);
+    // Find the start
+    for (Node n : nodeList) {
+      if (n.id == 0) {
+        start = n;
+        break;
       }
     }
 
+    findSolution(start);
+    int max = -1;
+    for (Node node : nodeList){
+      if (max < node.distance){
+        max = node.distance;
+      }
+    }
+
+    System.out.println(max);
   }
 
-  public static void breadthFirstSearch(Vertex v) {
-    Queue<Vertex> vertexQueue = new ArrayDeque<Vertex>();
-    vertexQueue.add(v);
-    v.discovered = true;
-    while (!vertexQueue.isEmpty()) {
-      Vertex w=vertexQueue.poll();
-      sb.append(w.id).append(" ");
-      for (Vertex i : w.adjecentVertex) {
-        if (!i.discovered) {
-          vertexQueue.add(i);
-          i.discovered = true;
+  public static void findSolution(Node start) {
+    start.isVisited = true;
+
+    for (Node child : start.nodeList){
+      if(!child.isVisited){
+        child.distance = start.distanceMap.get(child.id);
+        if(child.distance <= start.distance + child.distance){
+          child.distance += start.distance;
         }
+        findSolution(child);
       }
     }
   }
 
-  static class Vertex {
-    public int id;
-    public boolean discovered;
-    public List<Vertex> adjecentVertex = new ArrayList<Vertex>();
+  public static List<Node> makeGraph() {
+    int switches = sc.nextInt();
+    List<Node> nodeList = new ArrayList<>();
 
-    public Vertex(int id) {
-      this.id = id;
+    // Initialize node
+    for (int i = 0; i < switches; i++) {
+      nodeList.add(new Node(i));
     }
 
-    public void addAdjecentVertex(Vertex vertex) {
-      this.adjecentVertex.add(vertex);
+    // Input value
+    for (int i = 0; i < switches - 1; i++) {
+      int u = sc.nextInt();
+      int v = sc.nextInt();
+      int distance = sc.nextInt();
+
+      nodeList.get(u).addNeighbor(nodeList.get(v));
+      nodeList.get(v).addNeighbor(nodeList.get(u));
+
+      nodeList.get(u).distanceMap.put(v, distance);
+      nodeList.get(v).distanceMap.put(u, distance);
     }
+
+    return nodeList;
   }
 
-  static class InputReader {
+  public static class Node {
+    int id;
+    boolean isVisited;
+    int distance;
+    List<Node> nodeList;
+
+    HashMap<Integer, Integer> distanceMap;
+
+    public Node(int id) {
+      this.id = id;
+      this.distance = 0;
+      this.nodeList = new ArrayList<>();
+      this.distanceMap = new HashMap<>();
+      this.isVisited = false;
+    }
+
+    public void addNeighbor(Node node) {
+      this.nodeList.add(node);
+    }
+
+  }
+  public static class InputReader {
     private byte[] inbuf = new byte[2 << 23];
     public int lenbuf = 0, ptrbuf = 0;
     public InputStream is;
@@ -130,8 +146,7 @@ public class EIUDFS1 {
     }
 
     private int readByte() {
-      if (lenbuf == -1)
-        throw new InputMismatchException();
+      if (lenbuf == -1) throw new InputMismatchException();
       if (ptrbuf >= lenbuf) {
         ptrbuf = 0;
         try {
@@ -139,8 +154,7 @@ public class EIUDFS1 {
         } catch (IOException e) {
           throw new InputMismatchException();
         }
-        if (lenbuf <= 0)
-          return -1;
+        if (lenbuf <= 0) return -1;
       }
       return inbuf[ptrbuf++];
     }
@@ -159,16 +173,14 @@ public class EIUDFS1 {
 
     private int skip() {
       int b;
-      while ((b = readByte()) != -1 && isSpaceChar(b))
-        ;
+      while ((b = readByte()) != -1 && isSpaceChar(b)) ;
       return b;
     }
 
     public int nextInt() {
       int num = 0, b;
       boolean minus = false;
-      while ((b = readByte()) != -1 && !((b >= '0' && b <= '9') || b == '-'))
-        ;
+      while ((b = readByte()) != -1 && !((b >= '0' && b <= '9') || b == '-')) ;
       if (b == '-') {
         minus = true;
         b = readByte();
@@ -188,8 +200,7 @@ public class EIUDFS1 {
       long num = 0;
       int b;
       boolean minus = false;
-      while ((b = readByte()) != -1 && !((b >= '0' && b <= '9') || b == '-'))
-        ;
+      while ((b = readByte()) != -1 && !((b >= '0' && b <= '9') || b == '-')) ;
       if (b == '-') {
         minus = true;
         b = readByte();

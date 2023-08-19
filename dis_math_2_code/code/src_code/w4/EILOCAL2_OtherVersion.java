@@ -1,18 +1,18 @@
-package src_code.w3;
+package src_code.w4;
 
 import java.io.*;
 import java.util.*;
 
-public class EIPRF_Treasures {
+class EILOCAL2_OtherVersion {
   static InputReader reader;
   static StringBuilder sb = new StringBuilder();
 
   public static void main(String[] args) throws IOException {
     reader = new InputReader(System.in);
-    int places = reader.nextInt();
-    int signBoards = reader.nextInt();
+    int nVertices = reader.nextInt();
+    int nEdges = nVertices - 1;
 
-    List<Vertex> graph = makeGraph(places, signBoards);
+    List<Vertex> graph = makeGraph(nVertices, nEdges);
     Vertex start = graph.get(0);
 
     // Make start vertex
@@ -23,95 +23,132 @@ public class EIPRF_Treasures {
       }
     }
 
-    // Make signal list
-    customBfs(start);
+    // Do dijkstra
+    dijkstra(start, graph);
 
-    int max = Integer.MAX_VALUE;
-    int vertexId = -1;
+    // Print result
+    int max = 0;
+    Vertex r = graph.get(0);
+    for(Vertex v : graph){
+      if(max < v.distance){
+        max = v.distance;
+        r = v;
+      }
+    }
+
+
+
+    System.out.println(max);
+  }
+
+  public static void dijkstra(Vertex start, List<Vertex> graph) {
+
+    // Initialize
+    Queue<Vertex> priorityQueue = new PriorityQueue<>();
+    Set<Vertex> visited = new HashSet<>();
+    List<Vertex> neighbours;
+    int tempDistance;
+
     for (Vertex v : graph) {
-      if (v.signalList.size() > 2 && v.signal) {
-        if(v.signalList.size() < max){
-          max = v.signalList.size();
-          vertexId = v.id;
+      v.distance = -1;
+      v.previousVertex = null;
+      priorityQueue.add(v);
+    }
+    start.distance = 0;
+    visited.add(start);
+
+    while (!priorityQueue.isEmpty()) {
+      Vertex current = priorityQueue.poll();
+      neighbours = new ArrayList<>(current.adjacentMap.keySet());
+
+      for(Vertex child : neighbours){
+        if(!visited.contains(child)){
+          tempDistance = current.adjacentMap.get(child);
+          calculateDistance(child, tempDistance, current);
+          priorityQueue.add(child);
         }
+        visited.add(child);
       }
-    }
-
-    for(Vertex v : graph.get(vertexId).signalList){
-      sb.append(v.id).append(" ");
-    }
-
-    System.out.println(sb);
-  }
-
-  public static void customBfs(Vertex start){
-    Queue<Vertex> queue = new LinkedList<>();
-    queue.add(start);
-    start.isVisited = true;
-
-    while(!queue.isEmpty()){
-      Vertex v = queue.poll();
-      v.signalList.add(v);
-
-      for(Vertex w : v.adjecentList){
-        if(!w.isVisited){
-          w.signalList.addAll(v.signalList);
-          w.isVisited = true;
-          queue.add(w);
-        }
-      }
+      current.isVisited = true;
     }
   }
 
-  public static List<Vertex> makeGraph(int places, int signBoards) {
-    List<Vertex> graph = new ArrayList<>();
-    for (int i = 0; i < places; i++) {
-      graph.add(new Vertex(i));
+  public static void calculateDistance(Vertex child, int weight, Vertex current){
+    int tempDistance = current.distance + weight;
+    if(tempDistance > child.distance){
+      child.distance = tempDistance;
+      child.previousVertex = current;
     }
-    for (int i = 0; i < signBoards; i++) {
-      int from = reader.nextInt();
-      int to = reader.nextInt();
-      graph.get(from).addNeighbour(graph.get(to));
-
-      // Consider it is a cycle
-      if (to == 0) {
-        graph.get(from).signal = true;
-      }
-    }
-
-    return graph;
   }
 
-  public static class Vertex {
+  public static List<Vertex> makeGraph(int vertices, int edges) {
+    List<Vertex> verticesList = new ArrayList<>();
+
+    // Initialize matrix
+    for (int i = 0; i < vertices; i++) {
+      verticesList.add(new Vertex(i));
+    }
+
+    // Make graph
+    for (int i = 0; i < edges; i++) {
+      int u = reader.nextInt();
+      int v = reader.nextInt();
+      int w = reader.nextInt();
+
+
+      // Add neighbour to vertex
+      verticesList.get(u).addNeighbour(verticesList.get(v), w);
+      verticesList.get(v).addNeighbour(verticesList.get(u), w);
+    }
+
+    return verticesList;
+  }
+
+  public static class Vertex implements Comparable<Vertex> {
     int id;
     boolean isVisited;
-    boolean signal;
-    int level;
-    Set<Integer> path;
-    List<Vertex> adjecentList;
-    List<Vertex> signalList;
+    int weight;
+    int distance;
+    Vertex previousVertex;
+    HashMap<Vertex, Integer> adjacentMap;
 
-    Vertex(int id) {
+    public Vertex() {
+    }
+
+    public Vertex(int id) {
       this.id = id;
       this.isVisited = false;
-      this.signal = false;
-      this.adjecentList = new ArrayList<>();
-      this.signalList = new ArrayList<>();
-      this.path = new HashSet<>();
-      this.level = -1;
-      // this.path.add(id);
+      this.adjacentMap = new HashMap<>();
+      this.distance = 0;
+      this.previousVertex = null;
     }
 
-    public void addPath(int id) {
-      this.path.add(id);
+    @Override
+    public int compareTo(Vertex o) {
+      if(this.distance > o.distance){
+        return -1;
+      } else if(this.distance < o.distance){
+        return 1;
+      }
+      return 0;
     }
 
-    public void addNeighbour(Vertex v) {
-      this.adjecentList.add(v);
-    }
 
-    public void addSignalList(List<Vertex> signalList) {
-      this.signalList = signalList;
+
+    public void addNeighbour(Vertex v, int weight) {
+      this.adjacentMap.put(v, weight);
+    }
+  }
+
+  public static class Edge {
+    Vertex from;
+    Vertex to;
+    int weight;
+
+    Edge(Vertex from, Vertex to, int weight) {
+      this.from = from;
+      this.to = to;
+      this.weight = weight;
     }
   }
 
