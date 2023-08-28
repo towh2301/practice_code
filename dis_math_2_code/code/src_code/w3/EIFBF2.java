@@ -82,7 +82,7 @@ public class EIFBF2 {
   }
 
   public static void breadthFirstSearch(Vertex v, Set<Integer> set) {
-    Queue<Vertex> vertexQueue = new ArrayDeque<Vertex>();
+    Queue<Vertex> vertexQueue = new ArrayDeque<>();
     vertexQueue.add(v);
     v.isVisited = true;
     while (!vertexQueue.isEmpty()) {

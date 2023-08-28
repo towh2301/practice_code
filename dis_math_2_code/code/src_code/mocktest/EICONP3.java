@@ -1,111 +1,127 @@
-package src_code.w5;
+package src_code.mocktest;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
-class EIUSEFI2 {
+class EICONP3 {
   static InputReader sc;
-  static List<File> listFile = new ArrayList<>();
+
   static StringBuilder sb = new StringBuilder();
 
-  public static void main (String[] args) throws IOException {
+  public static void main(String[] args) throws IOException {
     sc = new InputReader(System.in);
-    findFile();
+    solve();
   }
 
-  public static void findFile() {
-    HashMap<String, File> fileMap = readGraph();
-    String fileName = sc.next();
+  public static void solve() {
+    List<Vertex> list = makeGraph();
 
-    for(Map.Entry<String, File> e : fileMap.entrySet()){
-      if(e.getValue().childFile.size() > 1){
-        e.getValue().isFolder = true;
+    for (Vertex v : list) {
+      if (!v.isVisited) {
+        Infor infor = new Infor(v.id, 0, 0);
+        bfs(v, infor);
+
+        // Edges / 2 because of undirected graph
+        sb.append(infor.min).append(" ").append(infor.vertices).append(" ").append(infor.edges / 2).append("\n");
       }
     }
-
-
-    for (Map.Entry<String, File> e : fileMap.entrySet()) {
-      if (e.getValue().isRoot) {
-        dfs(e.getValue(), fileName);
-        break;
-      }
-    }
-
 
     System.out.println(sb);
-
   }
 
-  public static void dfs(File start, String key) {
-    start.isVisited = true;
+  public static void dfs(Vertex leader, Infor infor) {
+    leader.isVisited = true;
+    leader.edges = leader.adjacentVertices.size();
+    if (infor.min > leader.id) infor.min = leader.id;
 
-    for (File s : start.childFile) {
-      if (!s.isVisited) {
-        if(s.isFolder){
-          dfs(s, key);
-          start.count += s.count;
-        } else {
-          if(s.name.contains(key)) start.count++;
+    for (Vertex v : leader.adjacentVertices) {
+      if (!v.isVisited) {
+        v.numOfVertices++;
+        dfs(v, infor);
+        leader.edges += v.edges;
+        leader.numOfVertices += v.numOfVertices;
+      }
+    }
+
+    infor.edges = leader.edges;
+    infor.vertices = leader.numOfVertices + 1;
+  }
+
+  public static void bfs(Vertex leader, Infor infor) {
+    Queue<Vertex> q = new ArrayDeque<>();
+    q.add(leader);
+    leader.isVisited = true;
+
+    while (!q.isEmpty()) {
+      Vertex parent = q.poll();
+      infor.vertices++;
+
+      for (Vertex child : parent.adjacentVertices) {
+        infor.edges++;
+        if (!child.isVisited) {
+          child.isVisited = true;
+          q.add(child);
         }
       }
-
     }
-
-    if (start.count != 0)
-      sb.append(start.name).append(" ").append(start.count).append("\n");
   }
 
-  public static HashMap<String, File> readGraph() {
-    int nFile = sc.nextInt();
-    HashMap<String, File> mapFolder = new HashMap<>();
+  public static List<Vertex> makeGraph() {
+    int vertices = sc.nextInt();
+    int edges = sc.nextInt();
+    List<Vertex> nodeList = new ArrayList<>();
 
-
-    for (int i = 0; i < nFile - 1; i++) {
-      String parent = sc.next();
-      String child = sc.next();
-
-      if (!mapFolder.containsKey(parent)) {
-        mapFolder.put(parent, new File(parent));
-      }
-      if (!mapFolder.containsKey(child)) {
-        mapFolder.put(child, new File(child));
-      }
-
-      mapFolder.get(parent).addChildren(mapFolder.get(child));
-      mapFolder.get(child).addChildren(mapFolder.get(parent));
+    // Initialize node
+    for (int i = 0; i < vertices; i++) {
+      nodeList.add(new Vertex(i));
     }
 
-    mapFolder.get(sc.next()).isRoot = true;
+    // Input value
+    for (int i = 0; i < edges; i++) {
+      int u = sc.nextInt();
+      int v = sc.nextInt();
 
-    for (Map.Entry<String, File> e : mapFolder.entrySet()) {
-      listFile.add(e.getValue());
+      nodeList.get(u).addNeighbor(nodeList.get(v));
+      nodeList.get(v).addNeighbor(nodeList.get(u));
     }
 
-    for (File f : listFile){
-      f.childFile.sort(Comparator.comparing(o -> o.name));
-    }
-
-    return mapFolder;
+    return nodeList;
   }
 
-  public static class File {
-    String name;
-    boolean isRoot, isVisited, isFolder;
+  public static class Vertex implements Comparable<Vertex> {
     int id;
-    int count;
-    List<File> childFile = new ArrayList<>();
+    boolean isVisited;
+    int edges;
+    int numOfVertices;
+    List<Vertex> adjacentVertices;
 
-    public File(String name) {
-      this.name = name;
-      this.count = 0;
+    public Vertex(int id) {
+      this.id = id;
+      this.adjacentVertices = new ArrayList<>();
       this.isVisited = false;
-      this.isFolder = false;
+      this.edges = 0;
+      this.numOfVertices = 0;
     }
 
-    public void addChildren(File file) {
-      childFile.add(file);
+    public void addNeighbor(Vertex v) {
+      adjacentVertices.add(v);
+    }
+
+    @Override
+    public int compareTo(Vertex o) {
+      return Integer.compare(this.id, o.id);
+    }
+  }
+
+  public static class Infor {
+    int min;
+    int edges;
+    int vertices;
+
+    public Infor(int min, int edges, int vertices) {
+      this.min = min;
+      this.edges = edges;
+      this.vertices = vertices;
     }
   }
 
@@ -231,4 +247,5 @@ class EIUSEFI2 {
       }
     }
   }
+
 }

@@ -16,66 +16,62 @@ class EIUMLMK2 {
 
   public static void findSolution() {
     List<Node> nodeList = makeGraph();
-    int price = sc.nextInt();
+    int primaryPrice = sc.nextInt();
 
-    // Decide first node
-    if (price <= nodeList.get(0).value) {
+    // Compare prices with first node value
+    if (primaryPrice <= nodeList.get(0).value) {
       nodeList.get(0).isBought = true;
-      nodeList.get(0).currentPrice = price;
+      nodeList.get(0).nProducts += 1;
+      nodeList.get(0).sellPrice = primaryPrice + primaryPrice * 10 / 100;
+      bfs(nodeList.get(0));
     }
-
-    bfs(nodeList.get(0));
 
     for (Node n : nodeList) {
-      n.isVisited = false;
+      if (n.isBought) {
+        sb.append(n.nProducts).append(" ");
+      } else {
+        sb.append(0).append(" ");
+      }
     }
 
-    dfs(nodeList.get(0));
-
-
-    for (Node n : nodeList) {
-      sb.append(n.numberOfRemainProducts).append(" ");
-    }
+    //
     System.out.println(sb);
   }
 
   public static void bfs(Node first) {
-    Queue<Node> q = new ArrayDeque<>();
-    q.add(first);
-    first.isBought = true;
+    Queue<Node> queue = new ArrayDeque<>();
+    queue.add(first);
 
-    while (!q.isEmpty()) {
-      Node e = q.poll();
+    while (!queue.isEmpty()) {
+      Node parent = queue.poll();
 
-      for (Node i : e.nodeList) {
-        if (!i.isVisited) {
-          if (i.isBought) {
-            e.numberOfRemainProducts -= i.numberOfRemainProducts;
-          } else {
-            i.numberOfRemainProducts = 0;
-            for (Node c : i.nodeList) {
-              c.numberOfRemainProducts = 0;
+      if (!parent.isVisited && parent.isBought) {
+        for (Node child : parent.nodeList) {
+          //if (!child.isVisited) {
+          if (child.value >= parent.sellPrice) {
+
+            child.sellPrice = parent.sellPrice + parent.sellPrice * 10 / 100;
+            child.isBought = true;
+
+            if (!child.isVisited) {
+              child.nProducts += 1;
+              queue.add(child);
             }
+
+          } else {
+            parent.nProducts += 1;
           }
+          //child.isVisited = true;
+          // }
         }
       }
 
+      parent.isVisited = true;
     }
-
   }
 
   public static void dfs(Node first) {
-    first.isVisited = true;
-    int price = (int) (first.currentPrice * 1.1);
 
-    for (Node i : first.nodeList) {
-      if (!i.isVisited) {
-        i.level += first.level + 1;
-        i.isBought = i.value >= price;
-        dfs(i);
-        first.numberOfRemainProducts += i.numberOfRemainProducts;
-      }
-    }
   }
 
   public static List<Node> makeGraph() {
@@ -105,23 +101,15 @@ class EIUMLMK2 {
   }
 
   public static class Node {
-    int id;
-    int level;
-    boolean isVisited;
-    boolean isBought;
-    int currentPrice;
-    int numberOfRemainProducts;
-    int value;
+    int id, level, sellPrice, nProducts, value;
+    boolean isVisited, isBought;
     List<Node> nodeList;
-
-    HashMap<Integer, Integer> distanceMap;
 
     public Node(int id) {
       this.id = id;
       this.nodeList = new ArrayList<>();
-      this.distanceMap = new HashMap<>();
       this.isVisited = false;
-      this.numberOfRemainProducts = 1;
+      this.nProducts = 0;
       this.isBought = false;
       this.level = 0;
     }
