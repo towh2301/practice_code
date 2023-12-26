@@ -1,120 +1,90 @@
-package src_code.w4;
+package src_code.mocktest;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
-public class EILOCAL2P {
-  static InputReader sc;
-  static StringBuilder sb = new StringBuilder();
+public class EICONP4 {
+  static InputReader reader;
+  static int count = 0;
 
   public static void main(String[] args) throws IOException {
-    sc = new InputReader(System.in);
-
-    List<Node> nodeList = makeGraph();
-    Node start = nodeList.get(0);
-
-    // Find the start
-    for (Node n : nodeList) {
-      if (n.id == 0) {
-        start = n;
-        break;
-      }
-    }
-
-    findSolution(start);
-    int max = -1;
-    int id = 0;
-    for (Node node : nodeList) {
-      if (max < node.distance) {
-        max = node.distance;
-        id = node.id;
-      }
-    }
-
-    for (Node i : nodeList) {
-      i.distance = 0;
-      i.isVisited = false;
-    }
-
-    // Start from new node
-    findSolution(nodeList.get(id));
-    int max1 = -1;
-    int id2 = -1;
-    Node end = null;
-    for (Node node : nodeList) {
-      if (max1 < node.distance) {
-        max1 = node.distance;
-        end = node;
-        id2 = node.id;
-      }
-    }
-
-    if (id2 < id) id = id2;
-
-    if (end != null) {
-      System.out.println(id + " " + end.distance);
-    }
+    reader = new InputReader(System.in);
+    solve();
   }
 
-  public static void findSolution(Node start) {
-    start.isVisited = true;
+  public static void solve() {
+    List<Vertex> list = makeGraph();
 
-    for (Node child : start.nodeList) {
-      if (!child.isVisited) {
-        child.distance = start.distanceMap.get(child.id);
-        child.distance += start.distance;
-        findSolution(child);
+    for (Vertex v : list) {
+      if (!v.isVisited) {
+        count++;
+        dfs(v);
+      }
+    }
+
+    System.out.println(count);
+  }
+
+  public static void dfs(Vertex leader) {
+    Queue<Vertex> q = new ArrayDeque<>();
+    q.add(leader);
+
+    while (!q.isEmpty()) {
+      Vertex cur = q.poll();
+
+      for (Vertex v : cur.adjacentVertices) {
+        // If it doesn't have parent
+        if (!v.isVisited) {
+          v.parent = cur;
+          q.add(v);
+          v.isVisited = true;
+        } else {
+          // If it has parent
+          if (v.parent.id != cur.id) {
+            count++;
+          }
+        }
       }
     }
   }
 
-  public static List<Node> makeGraph() {
-    int switches = sc.nextInt();
-    List<Node> nodeList = new ArrayList<>();
+  public static List<Vertex> makeGraph() {
+    List<Vertex> vertexList = new ArrayList<>();
+    int vertices = reader.nextInt();
+    int edges = reader.nextInt();
 
-    // Initialize node
-    for (int i = 0; i < switches; i++) {
-      nodeList.add(new Node(i));
+    // Initialize List
+    for (int i = 0; i < vertices; i++) {
+      vertexList.add(new Vertex(i));
     }
 
-    // Input value
-    for (int i = 0; i < switches - 1; i++) {
-      int u = sc.nextInt();
-      int v = sc.nextInt();
-      int distance = sc.nextInt();
+    // Make graph and count redundant
+    for (int i = 0; i < edges; i++) {
+      int u = reader.nextInt();
+      int v = reader.nextInt();
 
-      nodeList.get(u).addNeighbor(nodeList.get(v));
-      nodeList.get(v).addNeighbor(nodeList.get(u));
-
-      nodeList.get(u).distanceMap.put(v, distance);
-      nodeList.get(v).distanceMap.put(u, distance);
+      vertexList.get(u).addNeighbor(vertexList.get(v));
+      vertexList.get(v).addNeighbor(vertexList.get(u));
     }
 
-    return nodeList;
+    return vertexList;
   }
 
-  public static class Node {
-    int id;
+  public static class Vertex {
+    int id, redundantParent;
     boolean isVisited;
-    int distance;
-    List<Node> nodeList;
+    Vertex parent;
+    List<Vertex> adjacentVertices = new ArrayList<>();
 
-    HashMap<Integer, Integer> distanceMap;
-
-    public Node(int id) {
+    public Vertex(int id) {
       this.id = id;
-      this.distance = 0;
-      this.nodeList = new ArrayList<>();
-      this.distanceMap = new HashMap<>();
-      this.isVisited = false;
+      this.redundantParent = 0;
+      this.parent = null;
     }
 
-    public void addNeighbor(Node node) {
-      this.nodeList.add(node);
+    public void addNeighbor(Vertex v) {
+      this.adjacentVertices.add(v);
     }
-
   }
 
   public static class InputReader {
