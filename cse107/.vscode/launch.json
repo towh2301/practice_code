@@ -1,0 +1,259 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "test",
+            "request": "launch",
+            "mainClass": "test",
+            "projectName": "cse107_4440093a"
+        },
+        {
+            "type": "java",
+            "name": "EIUEVN1",
+            "request": "launch",
+            "mainClass": "EIUEVN1",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIBANKLOAN2",
+            "request": "launch",
+            "mainClass": "EIBANKLOAN2",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIUPURCHASE3",
+            "request": "launch",
+            "mainClass": "EIUPURCHASE3",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIUBHOUSE",
+            "request": "launch",
+            "mainClass": "EIUBHOUSE",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EISALE",
+            "request": "launch",
+            "mainClass": "EISALE",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIMEMCARD",
+            "request": "launch",
+            "mainClass": "EIMEMCARD",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIDISCOUNT3",
+            "request": "launch",
+            "mainClass": "EIDISCOUNT3",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIAUCTION",
+            "request": "launch",
+            "mainClass": "EIAUCTION",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIUCHRMS",
+            "request": "launch",
+            "mainClass": "EIUCHRMS",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIAPP21222FQ2",
+            "request": "launch",
+            "mainClass": "EIAPP21222FQ2",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "EIBANKFEE",
+            "request": "launch",
+            "mainClass": "EIBANKFEE",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIBANKRATE",
+            "request": "launch",
+            "mainClass": "EIBANKRATE",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EICLEANU",
+            "request": "launch",
+            "mainClass": "EICLEANU",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIDISCOU",
+            "request": "launch",
+            "mainClass": "EIDISCOU",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIDISCOUNT2",
+            "request": "launch",
+            "mainClass": "EIDISCOUNT2",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIEVERYN",
+            "request": "launch",
+            "mainClass": "EIEVERYN",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIGRADE",
+            "request": "launch",
+            "mainClass": "EIGRADE",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIINCRDES",
+            "request": "launch",
+            "mainClass": "EIINCRDES",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EILTGRADE",
+            "request": "launch",
+            "mainClass": "EILTGRADE",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIMONE",
+            "request": "launch",
+            "mainClass": "EIMONE",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EISALARY2",
+            "request": "launch",
+            "mainClass": "EISALARY2",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EISARR",
+            "request": "launch",
+            "mainClass": "EISARR",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EISNAIL",
+            "request": "launch",
+            "mainClass": "EISNAIL",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EITAX",
+            "request": "launch",
+            "mainClass": "EITAX",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIUBIRTH",
+            "request": "launch",
+            "mainClass": "EIUBIRTH",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIUCUBES",
+            "request": "launch",
+            "mainClass": "EIUCUBES",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIUCUBES2",
+            "request": "launch",
+            "mainClass": "EIUCUBES2",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIUFING",
+            "request": "launch",
+            "mainClass": "EIUFING",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIUMADIS",
+            "request": "launch",
+            "mainClass": "EIUMADIS",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIUSTAT",
+            "request": "launch",
+            "mainClass": "EIUSTAT",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIUTHU",
+            "request": "launch",
+            "mainClass": "EIUTHU",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIUTRAN1",
+            "request": "launch",
+            "mainClass": "EIUTRAN1",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIUTRIGLE",
+            "request": "launch",
+            "mainClass": "EIUTRIGLE",
+            "projectName": "problems_81ffb424"
+        },
+        {
+            "type": "java",
+            "name": "EIWIFI",
+            "request": "launch",
+            "mainClass": "EIWIFI",
+            "projectName": "problems_81ffb424"
+        }
+    ]
+}
